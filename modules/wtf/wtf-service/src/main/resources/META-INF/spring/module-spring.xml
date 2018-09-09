@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.symmetry.calculator.service.impl.EquLocalServiceImpl" id="com.symmetry.calculator.service.EquLocalService" />
+	<bean class="com.symmetry.calculator.service.impl.EquServiceImpl" id="com.symmetry.calculator.service.EquService" />
+	<bean class="com.symmetry.calculator.service.persistence.impl.EquPersistenceImpl" id="com.symmetry.calculator.service.persistence.EquPersistence" parent="basePersistence" />
+</beans>

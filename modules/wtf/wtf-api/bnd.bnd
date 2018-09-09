@@ -1,0 +1,9 @@
+Bundle-Name: wtf-api
+Bundle-SymbolicName: com.symmetry.calculator.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.symmetry.calculator.exception,\
+	com.symmetry.calculator.model,\
+	com.symmetry.calculator.service,\
+	com.symmetry.calculator.service.persistence
+-includeresource: META-INF/service.xml=../wtf-service/service.xml

@@ -1,0 +1,4 @@
+Bundle-Name: calculator-web
+Bundle-SymbolicName: com.symmetry.calculator
+Bundle-Version: 1.0.0
+Export-Package: com.symmetry.calculator.constants
