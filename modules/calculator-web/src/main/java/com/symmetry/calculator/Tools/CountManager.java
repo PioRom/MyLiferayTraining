@@ -21,7 +21,7 @@ public class CountManager {
 
     private void countResult() {
         if(typeOfEquation.equals(ListOfOperation.ADDITION)) result=number1+number2;
-        else if(typeOfEquation.equals(ListOfOperation.DIVISION)) result=number1-number2;
+        else if(typeOfEquation.equals(ListOfOperation.SUBTRACTION)) result=number1-number2;
         else if(typeOfEquation.equals(ListOfOperation.MULTIPLICATION)) result=number1*number2;
         else if(typeOfEquation.equals(ListOfOperation.DIVISION)) result=number1/number2;
     }

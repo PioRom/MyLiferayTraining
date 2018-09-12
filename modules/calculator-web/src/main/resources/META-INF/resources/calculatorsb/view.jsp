@@ -2,6 +2,7 @@
 
 <%@ page import="com.symmetry.calculator.service.EquLocalServiceUtil" %>
 <%@ page import="com.symmetry.calculator.model.Equ" %>
+<%@ page import="com.symmetry.calculator.Tools.ListOfOperation" %>
 
 
 <liferay-ui:search-container total="<%= EquLocalServiceUtil.getEqusCount()%>">
@@ -22,21 +23,60 @@
 
 <portlet:actionURL name="addEquation" var="addEquationAction"/>
 
-<aui:form action="<%=addEquationAction%>" name="fm">
+    <ul>
 
-    <aui:fieldset>
-        <aui:input name="number1"/>
-        <aui:input name="number2"/>
+        <li>
+            <aui:input name="number1"></aui:input>
+        </li>
 
-        <aui:input name="name"/>
-    </aui:fieldset>
+        <li>
+            <aui:input name="number2"></aui:input>
+        </li>
 
-    <aui:button-row>
-        <aui:button value="Dodaj" onClick=""></aui:button>
-    </aui:button-row>
+        <li>
+            <aui:input name="name"></aui:input>
+        </li>
+    </ul>
+
+<aui:button id="callAddingNumbers" value="Dodaj" onClick="makeAction('ADDITION')">
+</aui:button>
+
+<aui:button id="callSubstratingNumbers" value="Odejmij" onClick="makeAction('SUBTRACTION')">
+</aui:button>
+
+<aui:button id="callSubstratingNumbers" value="Pomnoz" onClick="makeAction('MULTIPLICATION')">
+</aui:button>
+
+<aui:button id="callSubstratingNumbers" value="Podziel" onClick="makeAction('DIVISION')">
+</aui:button>
+
+<aui:script>
+
+    function makeAction(type) {
+
+        var number1 = $("#<portlet:namespace/>number1").val();
+        var number2 = $("#<portlet:namespace/>number2").val();
+        var name = $("#<portlet:namespace/>name").val();
+        var typeOfEquation = type;
+        $.ajax({
+            type: "POST",
+            data: {
+                <portlet:namespace />number1: number1,
+                <portlet:namespace />number2: number2,
+                <portlet:namespace />name: name,
+                <portlet:namespace />typeOfEquation: typeOfEquation,
+            },
+            url: '<portlet:actionURL name="addEquation"/>',
+            success: function () {
+             Liferay.Portlet.refresh('#p_p_id<portlet:namespace/>');
+    }
+        })
+    };
+
+</aui:script>
 
 
-    <aui:button-row>
-        <aui:button type="submit" name="Dodaj"/>
-    </aui:button-row>
-</aui:form>
+
+
+
+

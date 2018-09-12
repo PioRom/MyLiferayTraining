@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.symmetry.calculator.Tools.CountManager;
+import com.symmetry.calculator.Tools.ListOfOperation;
 import com.symmetry.calculator.constants.CalculatorPortletKeys;
 import com.symmetry.calculator.model.Equ;
 import com.symmetry.calculator.models.EquationTest;
@@ -44,6 +45,7 @@ import java.util.logging.Logger;
 )
 public class CalculatorPortletSB extends MVCPortlet {
 
+
     private EquLocalService _equationLocalService;
 
     public void addEquation(ActionRequest request, ActionResponse response) {
@@ -56,15 +58,14 @@ public class CalculatorPortletSB extends MVCPortlet {
             e.printStackTrace();
         }
 
-        long number1 = ParamUtil.getLong(request,"number1");
-        long number2 = ParamUtil.getLong(request,"number2");
-        String name = ParamUtil.getString(request,"name");
-        String typeOfEquation= ParamUtil.getString(request,"typeOfEquation");
+        long number1 = ParamUtil.getLong(request, "number1");
+        long number2 = ParamUtil.getLong(request, "number2");
+        String name = ParamUtil.getString(request, "name");
+        String typeOfEquation = ParamUtil.getString(request,"typeOfEquation");
 
-        CountManager countManager=new CountManager(number1,number2,typeOfEquation);
+        CountManager countManager = new CountManager(number1, number2, typeOfEquation);
 
-
-        try{
+        try {
             _equationLocalService.addEquation(
                     serviceContext.getUserId(),
                     name,
@@ -79,11 +80,10 @@ public class CalculatorPortletSB extends MVCPortlet {
             Logger.getLogger(CalculatorPortlet.class.getName()).log(
                     Level.SEVERE, null, e);
 
-         /*   response.setRenderParameter(
-                    "mvcPath", "/edit_equation.jsp");*/
         }
 
     }
+
 
     @Reference(unbind = "-")
     protected void setEquationService(EquLocalService equationLocalService) {
@@ -91,34 +91,34 @@ public class CalculatorPortletSB extends MVCPortlet {
     }
 
     @Override
-    public void render(RenderRequest renderRequest, RenderResponse renderResponse)throws IOException, PortletException {
+    public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 
-        try{
+        try {
             ServiceContext serviceContext = ServiceContextFactory.getInstance(
-                    Equ.class.getName(),renderRequest);
+                    Equ.class.getName(), renderRequest);
 
             long groupId = serviceContext.getScopeGroupId();
-            long equationId = ParamUtil.getLong(renderRequest,"equationId");
+            long equationId = ParamUtil.getLong(renderRequest, "equationId");
 
             List<Equ> equations = _equationLocalService.getEquations(groupId);
 
-            if(equations.isEmpty()){
+            if (equations.isEmpty()) {
                 Equ equation = _equationLocalService.addEquation(serviceContext.getUserId(),
-                        "Przyklad",serviceContext,1,2,3,"Addition");
+                        "Przyklad", serviceContext, 1, 2, 3, "Addition");
 
                 equationId = equation.getEquId();
             }
 
-            if(equationId==0){
+            if (equationId == 0) {
                 equationId = equations.get(0).getEquId();
             }
 
-            renderRequest.setAttribute("equationId",equationId);
+            renderRequest.setAttribute("equationId", equationId);
 
         } catch (PortalException e) {
             e.printStackTrace();
         }
 
-        super.render(renderRequest,renderResponse);
+        super.render(renderRequest, renderResponse);
     }
 }
